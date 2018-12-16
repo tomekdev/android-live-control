@@ -1,0 +1,37 @@
+Android live control for rooted devices
+Allows to show your android screen on your desktop and control your device from desktop.
+Currently it is a WIP project and can run only on Linux desktops. Windows support is planned.
+Also a WEB interface is in plans. Support for unrooted devices is unsure.
+
+How it wil work ?
+Server side: Uses kernel uinput interface which can create virtual input devices. Server creates virtual keyboard and touch screen and awaits packets from client. Accordingly to received packets simulates text input, touches and presses. For graphics it conects to surface flinger and asks to mirror screen which is compressed and sent to client (encryption maybe will be implemented but it is not confirmed).
+Client side: Creates SDL2 window and connects to server running on Android. Awaits for frames from server, decompresses and shows in a window. Accordingly to where was mouse click sents signal to server. Same with text input.
+
+When it will be ready ?
+It is unknown
+
+Which devices will it support ?
+All rooted devices with Surface Flinger (Android 4.2 and higher) and uinput support.
+
+How to check if it will work on my device ?
+1. Check whether you have android 4.2 or higher.
+2. Check whether you have a rooted device.
+3. Check if your device has uinput support (if /dev/uinput or /dev/input/uinput exists that means it has).
+
+Build dependencies:
+- SDL2 library and header files
+- lzma compression library and header files
+
+How to install:
+Place livectrl-server in /data/local/tmp using adb or any other way. The you can leter move it wherever you want
+livectrl-client you can place anywhere you want
+
+How to use:
+On android device run livectrl-server as root and specify port:
+# su
+# PATH/TO/livectrl-server PORT
+
+Then connect to WiFi or enable WiFi hotspot or connect device to computer using USB cable and enable USB tethering
+
+On desktop connect to same network as android device if you used WiFi option, then get device's IP address and run livectrl-client and type DEVICE_IP:PORT
+You can also run it from terminal and specify device IP and PORT
